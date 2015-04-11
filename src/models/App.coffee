@@ -2,6 +2,7 @@
 # of containing the game logic directly.
 class window.App extends Backbone.Model
   initialize: ->
+
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
@@ -15,9 +16,10 @@ class window.App extends Backbone.Model
       @getResult()
 
   getResult: =>
+    # debugger
     playerScore = @get('playerHand').getScore()
     dealerScore = @get('dealerHand').getScore()
-    if dealerScore < playerScore <= 21
+    if (dealerScore > 21) || (dealerScore < playerScore <= 21)
       @set 'result', 'win'
     else if playerScore is dealerScore
       @set 'result', 'push'

@@ -12,8 +12,8 @@ class window.AppView extends Backbone.View
   initialize: ->
     @render()
     @model.on 'change:result', =>
-      @finish(@model.get 'result')
-
+      @finish(@model.get 'result') if @model.get 'result'
+      @render()
 
   render: ->
     @$el.children().detach()
