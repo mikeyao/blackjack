@@ -38,7 +38,7 @@ class window.Hand extends Backbone.Collection
     while score < 17
       @hit()
       score = @dealerScore()
-    @trigger('end')
+    @trigger('end') if score <= 21
 
   getScore: =>
     if @isDealer

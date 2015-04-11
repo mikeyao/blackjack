@@ -2,18 +2,9 @@
 # of containing the game logic directly.
 class window.App extends Backbone.Model
   initialize: ->
-
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
-    @set 'result', null
-    @get('playerHand').on 'stand', =>
-      @get('dealerHand').flip()
-      @get('dealerHand').dealerPlay()
-    @get('dealerHand').on 'end', =>
-      @getResult()
-    @get('playerHand').on 'end', =>
-      @getResult()
+    @set 'bankRoll', bankRoll = new BankRoll()
+    @newGame()
 
   getResult: =>
     # debugger
@@ -26,4 +17,28 @@ class window.App extends Backbone.Model
     else
       @set 'result', 'lose'
 
+  newGame: =>
+    deck = @get 'deck'
+    bankRoll = @get 'bankRoll'
+    @set 'deck', deck = new Deck() if deck.length < 26
+    @set 'playerHand', deck.dealPlayer()
+    @set 'dealerHand', deck.dealDealer()
+    @updateChips()
+    @set 'result', null
+    bankRoll.set 'betSet', false
+    bankRoll.set 'bet', 0
+    @get('playerHand').on 'stand', =>
+      @get('dealerHand').flip()
+      @get('dealerHand').dealerPlay()
+    @get('dealerHand').on 'end', =>
+      @getResult()
+    @get('playerHand').on 'end', =>
+      @getResult()
 
+  updateChips: =>
+    bankRoll = @get 'bankRoll'
+    result = @get 'result'
+    if result is 'win'
+      bankRoll.set 'chips', bankRoll.get('chips') + 2 * bankRoll.get('bet')
+    else if result is 'push'
+      bankRoll.set 'chips', bankRoll.get('chips') + bankRoll.get('bet')
