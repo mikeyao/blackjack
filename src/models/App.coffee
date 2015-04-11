@@ -23,6 +23,5 @@ class window.App extends Backbone.Model
       @set 'result', 'push'
     else
       @set 'result', 'lose'
-    console.log('end heard in app')
 
 

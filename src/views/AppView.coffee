@@ -11,10 +11,19 @@ class window.AppView extends Backbone.View
 
   initialize: ->
     @render()
+    @model.on 'change:result', =>
+      @finish(@model.get 'result')
+
 
   render: ->
     @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+
+  finish: (result)->
+    if confirm("You #{result} /n Do you want to continue?")
+      @model.initialize()
+    else
+      console.log("Do nothing")
 

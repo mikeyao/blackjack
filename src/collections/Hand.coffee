@@ -6,6 +6,7 @@ class window.Hand extends Backbone.Collection
   hit: ->
     newCard = @deck.pop()
     @add(newCard)
+    @trigger('end') if @playerScore() > 21
     newCard
 
   stand: ->
