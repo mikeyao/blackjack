@@ -4,7 +4,13 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop())
+    newCard = @deck.pop()
+    @add(newCard)
+    newCard
+
+  stand: ->
+    # console.log('stand triggered in Hand Model')
+    @trigger('stand')
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -19,5 +25,9 @@ class window.Hand extends Backbone.Collection
     # Usually, that array contains one element. That is the only score.
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
+
+  flip: ->
+    # console.log('flip triggered in Hand Model')
+    @at(0).flip()
 
 
