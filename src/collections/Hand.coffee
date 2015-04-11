@@ -30,4 +30,35 @@ class window.Hand extends Backbone.Collection
     # console.log('flip triggered in Hand Model')
     @at(0).flip()
 
+  dealerPlay: =>
+    # flip
+    # @flip()
+    score = @dealerScore()
+    while score < 17
+      @hit()
+      score = @dealerScore()
+    @trigger('end')
 
+  getScore: =>
+    if @isDealer
+      @dealerScore()
+    else
+      @playerScore()
+
+
+  dealerScore: =>
+    scores = @scores()
+    if scores[0] is scores[1]
+      scores[0]
+    else
+      if 18 <= scores[1] <= 21
+        scores[1]
+      else
+        scores[0]
+
+  playerScore: =>
+    scores = @scores()
+    if scores[1] <= 21
+      scores[1]
+    else
+      scores[0]
