@@ -10,7 +10,6 @@ class window.Hand extends Backbone.Collection
     newCard
 
   stand: ->
-    # console.log('stand triggered in Hand Model')
     @trigger('stand')
 
   hasAce: -> @reduce (memo, card) ->
@@ -28,12 +27,9 @@ class window.Hand extends Backbone.Collection
     [@minScore(), @minScore() + 10 * @hasAce()]
 
   flip: ->
-    # console.log('flip triggered in Hand Model')
     @at(0).flip()
 
   dealerPlay: =>
-    # flip
-    # @flip()
     score = @dealerScore()
     while score < 17
       @hit()
@@ -45,7 +41,6 @@ class window.Hand extends Backbone.Collection
       @dealerScore()
     else
       @playerScore()
-
 
   dealerScore: =>
     scores = @scores()

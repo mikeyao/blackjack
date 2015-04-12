@@ -25,5 +25,4 @@ class window.BankRollView extends Backbone.View
   render: ->
     @$el.children().detach()
     @$el.html @template @model.attributes
-    # @$el.addClass 'covered' unless @model.get 'revealed'
 
